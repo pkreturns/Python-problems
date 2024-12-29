@@ -9,13 +9,13 @@ class User:
 
     def __init__(self, user_id, username, password, failed_attempts_left=0, is_locked=False):
         self.user_id = user_id
-        self.username = username
+        self.username = username.lower()
         self.password = password
         self.is_locked = is_locked
         self.failed_attempts_left = failed_attempts_left
 
     def reset_failed_attempts(self):
-        self.failed_attempts = 0
+        self.failed_attempts_left = 3
         print(f"Failed attempts reset for user {self.username}.")
 
     def increment_failed_attempts(self):
@@ -51,7 +51,7 @@ class AuthenticationSystem:
     # Never alter this login function
     def login(self, username, password):
 
-        user_row = self.users[self.users['username'] == username]
+        user_row = self.users[self.users['username'].str.lower() == username.lower()]
         if user_row.empty:
             print(f"User {username} not found.")
             return
@@ -67,6 +67,7 @@ class AuthenticationSystem:
         if password == user.password:
             user.reset_failed_attempts()
             print(f"User {username} logged in successfully.")
+            self.update_user(user)
         else:
             user.increment_failed_attempts()
             self.update_user(user)
@@ -93,3 +94,8 @@ auth_system.login("neena", "password321")
 auth_system.login("neena", "password123")   
 
 auth_system.login("helios", "mysecurepassword")
+
+
+
+
+#Here is a code that creates an application using python and pandas that can manage user registrations, tracking logins, locking accounts.
