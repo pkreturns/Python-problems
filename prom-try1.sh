@@ -51,12 +51,12 @@ Description=Prometheus
 Wants=network-online.target
 After=network-online.target
 
-[Service] 
-User=prometheus 
-ExecStart=/usr/local/bin/prometheus \ =
-  --config.file=/etc/prometheus/prometheus.yml \ 
-  --storage.tsdb.path=/var/lib/prometheus/ \ 
-  --web.route-prefix=/prometheus 
+[Service]
+User=prometheus
+ExecStart=/usr/local/bin/prometheus \
+  --config.file=/etc/prometheus/prometheus.yml \
+  --storage.tsdb.path=/var/lib/prometheus \
+  --web.route-prefix=/prometheus
 
 [Install]
 WantedBy=default.target
